@@ -49,7 +49,7 @@ smtp.createServer(serverOpts, function(req) {
             http.post({
                 url: serverOpts.endpoint,
                 json: email
-            }, function(err, res, body) {
+            }, function(err) {
                 if (err) console.error(err);
             })
         }).on("error", function(err) {
