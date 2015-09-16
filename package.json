@@ -2,14 +2,14 @@
   "name": "smtp2http",
   "version": "0.0.1",
   "description": "SMTP to HTTP gateway",
-  "main": "index.js",
   "bin": {
     "smtp2http": "./bin/smtp2http.js"
   },
   "dependencies": {
     "smtp-protocol": "^2",
     "squabble": "^1",
-    "request": "^2"
+    "request": "^2",
+    "mailparser": "^0.5"
   },
   "repository": {
     "type": "git",
