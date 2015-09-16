@@ -23,4 +23,4 @@ Install
 git clone git@github.com:Zingle/smtp2http.git
 cd smtp2http
 npm install -g
-```sh
+```
