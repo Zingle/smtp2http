@@ -9,7 +9,8 @@
     "smtp-protocol": "^2",
     "squabble": "^1",
     "request": "^2",
-    "mailparser": "^0.5"
+    "mailparser": "^0.5",
+    "colors": "^1"
   },
   "repository": {
     "type": "git",
