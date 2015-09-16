@@ -6,12 +6,10 @@
   "bin": {
     "smtp2http": "./bin/smtp2http.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "dependencies": {
     "smtp-protocol": "^2",
-    "squabble": "^1"
+    "squabble": "^1",
+    "request": "^2"
   },
   "repository": {
     "type": "git",
