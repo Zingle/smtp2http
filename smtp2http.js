@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var squabble = require("squabble").createParser(),
     smtp = require("smtp-protocol"),
     http = require("request"),
@@ -51,35 +52,33 @@ if (args.named["--tls"]) {
 
 // create and start SMTP server
 smtp.createServer(serverOpts, function(req) {
+    var id;
+
     // accept all incoming messages
     req.on("to", function(to, ack) {
-        console.log("incoming message to " + to);
+        id = to;
+        console.log("-->".yellow + "incoming message to " + to);
         ack.accept();
     });
 
     // send message to web endpoint
     req.on("message", function(stream, ack) {
         stream.pipe(new MailParser().on("end", function(email) {
-            var msg;
-
             http.post({
                 url: serverOpts.endpoint,
                 json: email
             }, function(err, res, body) {
-                if (err) {
-                    msg = "error".red + " " + err.message;
-                    console.error(msg);
-                }
+                var msg;
 
-                else if (res.statusCode < 200 || res.statusCode > 299) {
-                    msg = res.statusCode + " -----------";
-                    console.error(msg.magenta);
-                    console.error(body);
-                    console.error("---------------".magenta);
-                }
-
-                else {
-                    console.log("passed message successfully");
+                if (err) return console.error("error".red + " " + err.message);
+                
+                msg = String(res.statusCode);
+                if (res.statusCode >= 500) {
+                    console.error(msg.red + " " + body.replace("\n", "\\n"));
+                } else if (res.statusCode >= 200 && res.statusCode < 300) {
+                    console.log(msg.green + " message passed " + id);
+                } else {
+                    console.error(msg.magenta + " unexpected");
                 }
             })
         }).on("error", function(err) {
