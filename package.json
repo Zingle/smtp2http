@@ -1,6 +1,6 @@
 {
   "name": "smtp2http",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "SMTP to HTTP gateway",
   "bin": {
     "smtp2http": "./smtp2http.js"
