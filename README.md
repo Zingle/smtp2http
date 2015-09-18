@@ -15,7 +15,7 @@ Usage: smtp2http [-v|--verbose] [-s|--silent|-q|--quiet]
  -v --verbose           Log information to STDOUT
 
 TLS Option
-The --tls option accepts a colon-delimited list of certificate file.
+The --tls option accepts a colon-delimited list of certificate files.
 You can specify a single combined PFX file, a cert file followed by a
 key file, or a cert file followed by a key file followed by a signing
 authority certificate.
