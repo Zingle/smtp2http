@@ -5,8 +5,9 @@ Usage
 -----
 ```sh
 Usage: smtp2http [-v|--verbose] [-s|--silent|-q|--quiet]
-    [-T|--tls=<tls_opt>] ENDPOINT
+    [-T|--tls=<tls_opt>] [[-H|--header=<header>], ...] ENDPOINT
 
+ -H --header=<header>   HTTP header to send with requests
  -q --quiet             Do not log to STDERR
  -s --silent            Alias for --quiet
  -T --tls=<tls_opt>     colon-delimited list of cert files

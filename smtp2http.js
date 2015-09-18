@@ -14,11 +14,18 @@ squabble.shortOpts().longOpts().stopper()
     .option("-T", "--tls")
     .flag("-s", "-q", "--silent", "--quiet")
     .flag("-v", "--verbose")
+    .list("-H", "--header")
     .required("ENDPOINT");
 
-// parse arguments
+// parse and apply arguments
 args = squabble.parse();
 serverOpts.endpoint = args.named.ENDPOINT;
+serverOpts.headers = {};
+args.named["--header"].forEach(function(headerLine) {
+    var name = headerLine.split(":")[0];
+    serverOpts.headers[name] = serverOpts.headers[name] || [];
+    serverOpts.headers[name].push(headerLine.substr(name.length+1).trim());
+});
 
 // configure console output
 if (args.named["--quiet"]) {
@@ -64,7 +71,8 @@ smtp.createServer(serverOpts, function(req) {
         stream.pipe(new MailParser().on("end", function(email) {
             http.post({
                 url: serverOpts.endpoint,
-                json: email
+                json: email,
+                headers: serverOpts.headers
             }, function(err, res, body) {
                 var msg;
 
