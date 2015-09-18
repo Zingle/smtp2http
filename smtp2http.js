@@ -4,9 +4,7 @@ var squabble = require("squabble").createParser(),
     http = require("request"),
     readFile = require("fs").readFileSync,
     MailParser = require("mailparser").MailParser,
-    args,
-    tlsTokens,
-    serverOpts = {};
+    args, tlsTokens, serverOpts = {};
 
 // enable color support
 require("colors");
