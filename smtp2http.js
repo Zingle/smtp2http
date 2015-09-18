@@ -87,5 +87,5 @@ smtp.createServer(serverOpts, function(req) {
 
         ack.accept();
     });
-}).listen(process.env.NODE_PORT || 25);
+}).listen(process.env.SMTP_PORT || 25);
 
