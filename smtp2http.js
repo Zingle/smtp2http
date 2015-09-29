@@ -2,7 +2,8 @@
 var squabble = require("squabble").createParser(),
     smtp = require("smtp-protocol"),
     http = require("request"),
-    readFile = require("fs").readFileSync,
+    tlsfs = require("tlsfs"),
+    copy = require("objektify").copy,
     MailParser = require("mailparser").MailParser,
     args, tlsTokens, serverOpts = {};
 
@@ -36,23 +37,8 @@ if (args.named["--quiet"]) {
 }
 
 if (args.named["--tls"]) {
-    tlsTokens = args.named["--tls"].split(":");
-    switch (tlsTokens.length) {
-        case 1:
-            serverOpts.pfx = readFile(tlsTokens.shift());
-            break;
-        case 2:
-            serverOpts.cert = readFile(tlsTokens.shift());
-            serverOpts.key = readFile(tlsTokens.shift());
-            break;
-        case 3:
-            serverOpts.cert = readFile(tlsTokens.shift());
-            serverOpts.key = readFile(tlsTokens.shift());
-            serverOpts.ca = readFile(tlsTokens.shift());
-            break;
-        default:
-            throw new Error("unrecognized --tls argument");
-    }
+    tlsPaths = args.named["--tls"].split(":");
+    copy(serverOpts, tlsfs.readCertsSync(tlsPaths));
 }
 
 // create and start SMTP server
